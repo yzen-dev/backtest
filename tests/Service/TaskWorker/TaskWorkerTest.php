@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Sevice\TaskWorker;
 
+use Tests\Factory\TestTasks;
 use Tests\TestCase;
 use App\Service\TaskWorker\TaskWorker;
 
@@ -28,45 +29,10 @@ final class TaskWorkerTest extends TestCase
         $worker->handle();
         $this->assertTrue(true);
     }
-    
+
     public function defaultDataSet(): array
     {
-        return [
-            'Task 1' => [[
-                [
-                    'category' => 'account',
-                    'task' => 'processPayment',
-                    'data' => [
-                        'account_id' => 123,
-                        'amount' => 59000
-                    ]
-                ],
-                [
-                    'category' => 'amocrm',
-                    'task' => 'sendLead',
-                    'data' => [
-                        'lead_id' => 1
-                    ]
-                ]
-            ]],
-            'Task 2' => [[
-                [
-                    'category' => 'account',
-                    'task' => 'processPayment',
-                    'data' => [
-                        'account_id' => 345,
-                        'amount' => 99000
-                    ]
-                ],
-                [
-                    'category' => 'amocrm',
-                    'task' => 'sendLead',
-                    'data' => [
-                        'lead_id' => 2
-                    ]
-                ]
-            ]],
-        ];
+        return TestTasks::getCollection();
     }
 
 }
