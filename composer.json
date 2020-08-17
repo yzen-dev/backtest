@@ -11,6 +11,8 @@
     }
   },
   "require": {
-    "vlucas/phpdotenv": "^5.1"
+    "vlucas/phpdotenv": "^5.1",
+    "qxsch/worker-pool": "^1.6",
+    "ext-pcntl": "*"
   }
 }
