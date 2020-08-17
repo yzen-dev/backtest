@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Service\TaskWorker;
 
 use App\Helpers\PrintConsole;
+use QXS\WorkerPool\WorkerPool;
 
 /**
  * Class TaskWorker
@@ -19,13 +20,19 @@ class TaskWorker
      * @var ParseTasksList
      */
     private $parsingService;
+    /**
+     * @var int Кол-во потоков
+     */
+    private int $numberThreads;
 
     /**
      * TaskWorker constructor.
+     * @param int $numberThreads Кол-во потоков
      */
-    public function __construct()
+    public function __construct(int $numberThreads)
     {
         $this->parsingService = new ParseTasksList();
+        $this->numberThreads = $numberThreads;
     }
 
     /**
@@ -33,13 +40,19 @@ class TaskWorker
      */
     public function handle()
     {
-        PrintConsole::info('Начинается обработка задач. Потоков: ' . $_ENV['NUMBER_THREADS'] );
+        PrintConsole::info('Начинается обработка задач. Потоков: ' . $this->numberThreads);
         try {
             $list = $this->parsingService->parse(__DIR__ . '/../../../tasks.json')->getTaskList();
-            /** @var Task $item */
-            foreach ($list as $item) {
-                $item->handle();
+
+            $wp = new WorkerPool();
+            $wp->setWorkerPoolSize($this->numberThreads)->create(new ParallelWorker());
+            if (!empty($list)) {
+                foreach ($list as $item) {
+                    $wp->run($item);
+                }
             }
+            $wp->waitForAllWorkers();
+
             PrintConsole::success('Все задачи выполнены');
         } catch (\Exception $e) {
             PrintConsole::error('Ошибка обработки задач.' . $e->getMessage());
