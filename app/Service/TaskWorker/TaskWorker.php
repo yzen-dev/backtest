@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Service\TaskWorker;
 
-use App\Helpers\PrintConsole;
 use QXS\WorkerPool\WorkerPool;
+use QXS\WorkerPool\WorkerPoolException;
 
 /**
  * Class TaskWorker
@@ -37,26 +37,19 @@ class TaskWorker
 
     /**
      * Выполнить список задач
+     * @throws WorkerPoolException
      */
     public function handle()
     {
-        PrintConsole::info('Начинается обработка задач. Потоков: ' . $this->numberThreads);
-        try {
-            $list = $this->parsingService->parse(__DIR__ . '/../../../tasks.json')->getTaskList();
+        $list = $this->parsingService->parse(__DIR__ . '/../../../tasks.json')->getTaskList();
 
-            $wp = new WorkerPool();
-            $wp->setWorkerPoolSize($this->numberThreads)->create(new ParallelWorker());
-            if (!empty($list)) {
-                foreach ($list as $item) {
-                    $wp->run($item);
-                }
+        $wp = new WorkerPool();
+        $wp->setWorkerPoolSize($this->numberThreads)->create(new ParallelWorker());
+        if (!empty($list)) {
+            foreach ($list as $item) {
+                $wp->run($item);
             }
-            $wp->waitForAllWorkers();
-
-            PrintConsole::success('Все задачи выполнены');
-        } catch (\Exception $e) {
-            PrintConsole::error('Ошибка обработки задач.' . $e->getMessage());
-            PrintConsole::error($e->getTraceAsString());
         }
+        $wp->waitForAllWorkers();
     }
 }
