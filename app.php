@@ -6,7 +6,8 @@ use App\Service\TaskWorker\TaskWorker;
 
 PrintConsole::info('Начинается обработка задач. Потоков: ' . (int)$_ENV['NUMBER_THREADS']);
 try {
-    $worker = new TaskWorker((int)$_ENV['NUMBER_THREADS']);
+    $worker = new TaskWorker();
+    $worker->setNumberThreads((int)$_ENV['NUMBER_THREADS']);
     $worker->handle();
 } catch (\Exception $e) {
     PrintConsole::error('Ошибка обработки задач.' . $e->getMessage());

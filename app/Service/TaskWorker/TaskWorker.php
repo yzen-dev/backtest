@@ -20,28 +20,32 @@ class TaskWorker
      * @var ParseTasksList
      */
     private $parsingService;
+    
     /**
      * @var int Кол-во потоков
      */
-    private int $numberThreads;
+    private int $numberThreads = 2;
+    
+    /**
+     * @var string Файл который парсим
+     */
+    private string $dir = __DIR__ . '/../../../tasks.json';
 
     /**
      * TaskWorker constructor.
-     * @param int $numberThreads Кол-во потоков
      */
-    public function __construct(int $numberThreads)
+    public function __construct()
     {
         $this->parsingService = new ParseTasksList();
-        $this->numberThreads = $numberThreads;
     }
 
     /**
      * Выполнить список задач
      * @throws WorkerPoolException
      */
-    public function handle()
+    public function handle(): void
     {
-        $list = $this->parsingService->parse(__DIR__ . '/../../../tasks.json')->getTaskList();
+        $list = $this->parsingService->parse($this->dir)->getTaskList();
 
         $wp = new WorkerPool();
         $wp->setWorkerPoolSize($this->numberThreads)->create(new ParallelWorker());
@@ -51,5 +55,39 @@ class TaskWorker
             }
         }
         $wp->waitForAllWorkers();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberThreads(): int
+    {
+        return $this->numberThreads;
+    }
+
+    /**
+     * @param int $numberThreads
+     */
+    public function setNumberThreads(int $numberThreads): TaskWorker
+    {
+        $this->numberThreads = $numberThreads;
+        return $this;
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getDir()
+    {
+        return $this->dir;
+    }
+
+    /**
+     * @param int|string $dir
+     */
+    public function setDir($dir): TaskWorker
+    {
+        $this->dir = $dir;
+        return $this;
     }
 }
