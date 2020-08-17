@@ -33,7 +33,7 @@ class TaskWorker
      */
     public function handle()
     {
-        PrintConsole::info('Начинается обработка задач.');
+        PrintConsole::info('Начинается обработка задач. Потоков: ' . $_ENV['NUMBER_THREADS'] );
         try {
             $list = $this->parsingService->parse(__DIR__ . '/../../../tasks.json')->getTaskList();
             /** @var Task $item */
