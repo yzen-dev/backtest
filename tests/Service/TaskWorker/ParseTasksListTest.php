@@ -36,7 +36,7 @@ final class ParseTasksListTest extends TestCase
             $this->assertTrue(true);
             return;
         }
-        $this->fail('Exception was not raised');
+        $this->fail('Ошибка не вызвана');
     }
 
     /**
