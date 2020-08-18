@@ -13,14 +13,26 @@ use QXS\WorkerPool\WorkerInterface;
 class ParallelWorker implements WorkerInterface
 {
 
+    /**
+     * {@inheritDoc}
+     * @param Semaphore $semaphore
+     */
     public function onProcessCreate(Semaphore $semaphore)
     {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function onProcessDestroy()
     {
     }
 
+    /**
+     * {@inheritDoc}
+     * @param \Serializable $input
+     * @return \Serializable|void
+     */
     public function run($input)
     {
         /** @var Task $input */

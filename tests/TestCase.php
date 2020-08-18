@@ -4,8 +4,15 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
+/**
+ * Class TestCase
+ * @package Tests
+ */
 abstract class TestCase extends BaseTestCase
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function setUp(): void
     {
         if (!is_dir('tmp')) {
@@ -14,11 +21,9 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
     }
 
-    /*public static function tearDownAfterClass(): void
-    {
-        rmdir('tmp');
-    }*/
-
+    /**
+     * {@inheritDoc}
+     */
     protected function tearDown(): void
     {
         if (is_dir('tmp')) {
@@ -27,10 +32,16 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    public static function delTree($dir) {
-        $files = array_diff(scandir($dir), array('.','..'));
+    /**
+     * Рекурсивное удаление директории вместе с файлами
+     * @param string $dir Директория которую необходимо удалить
+     * @return bool
+     */
+    public static function delTree(string $dir): bool
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
         foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+            (is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
         }
         return rmdir($dir);
     }

@@ -13,7 +13,7 @@ class ParseTasksList
 {
     /**
      * Список задач
-     * @var array
+     * @var array<Task>
      */
     private array $taskList = [];
 
@@ -45,7 +45,9 @@ class ParseTasksList
     }
 
     /**
-     * @return array
+     * Получить список задач
+     * 
+     * @return array<Task>
      */
     public function getTaskList() : array
     {

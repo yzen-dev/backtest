@@ -3,3 +3,5 @@ parameters:
 	paths:
 		- app
 		- tests
+	ignoreErrors:
+		- '#Method [a-zA-Z0-9\\_]+::[a-zA-Z0-9\\_]+\(\) has no return typehint specified.#'

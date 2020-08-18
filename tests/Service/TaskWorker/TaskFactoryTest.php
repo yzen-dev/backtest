@@ -9,6 +9,10 @@ use App\Service\TaskWorker\TaskFactory;
 use App\Service\TaskWorker\TaskAdapters\AmocrmAdapter;
 use App\Service\TaskWorker\TaskAdapters\AccountAdapter;
 
+/**
+ * Class TaskFactoryTest
+ * @package Tests\Sevice\TaskWorker
+ */
 final class TaskFactoryTest extends TestCase
 {
     /**
@@ -17,9 +21,9 @@ final class TaskFactoryTest extends TestCase
      * @testdox Фабрика Task
      * @group dto_factory
      * @dataProvider defaultDataSet
-     * @param $data
+     * @param array[][][] $data
      */
-    public function testParseFile($data): void
+    public function testParseFile(array $data): void
     {
         foreach ($data as $item) {
             $data = (object) $item;
@@ -35,6 +39,11 @@ final class TaskFactoryTest extends TestCase
         }
     }
 
+    /**
+     * Дефолтный набор данных для тестирования
+     * 
+     * @return array[][][]
+     */
     public function defaultDataSet(): array
     {
         return TestTasks::getCollection();

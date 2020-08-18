@@ -7,6 +7,10 @@ use Tests\Factory\TestTasks;
 use Tests\TestCase;
 use App\Service\TaskWorker\TaskWorker;
 
+/**
+ * Class TaskWorkerTest
+ * @package Tests\Sevice\TaskWorker
+ */
 final class TaskWorkerTest extends TestCase
 {
     /**
@@ -15,9 +19,10 @@ final class TaskWorkerTest extends TestCase
      * @testdox Task worker
      * @group worker
      * @dataProvider defaultDataSet
-     * @param $data
+     * @param array[][][] $data
+     * @throws \QXS\WorkerPool\WorkerPoolException
      */
-    public function testParseFile($data): void
+    public function testParseFile(array $data): void
     {
         $path = 'tmp/testWorkerFile.json';
         $myfile = fopen($path, 'wb') or die('Cannot open the file');
@@ -30,6 +35,11 @@ final class TaskWorkerTest extends TestCase
         $this->assertTrue(true);
     }
 
+    /**
+     * Дефолтный набор данных для тестирования
+     * 
+     * @return array[][][]
+     */
     public function defaultDataSet(): array
     {
         return TestTasks::getCollection();

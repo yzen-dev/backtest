@@ -4,9 +4,19 @@ declare(strict_types=1);
 namespace Tests\Factory;
 
 
+/**
+ * Class TestTasks
+ * @package Tests\Factory
+ */
 class TestTasks
 {
-    public static function getCollection(){
+    /**
+     * Дефолтный набор данных для тестирования
+     *
+     * @return array[][][]
+     */
+    public static function getCollection(): array
+    {
         return [
             'Task 1' => [[
                 [

@@ -9,10 +9,20 @@ use Tests\Factory\TestTasks;
 use App\Service\TaskWorker\Task;
 use App\Service\TaskWorker\ParseTasksList;
 
+/**
+ * Class ParseTasksListTest
+ * @package Tests\Sevice\TaskWorker
+ */
 final class ParseTasksListTest extends TestCase
 {
+    /**
+     * @var ParseTasksList
+     */
     private ParseTasksList $parsingService;
 
+    /**
+     *
+     */
     protected function setUp(): void
     {
         $this->parsingService = new ParseTasksList();
@@ -64,10 +74,10 @@ final class ParseTasksListTest extends TestCase
      * @testdox Разбор списка задач
      * @group parse_tasks
      * @dataProvider defaultDataSet
-     * @param $data
+     * @param array[][][] $data
      * @throws Exception
      */
-    public function testParseFile($data): void
+    public function testParseFile(array $data): void
     {
         $path = 'tmp/testParseFile.json';
         $myfile = fopen($path, 'wb') or die('Cannot open the file');
@@ -81,6 +91,11 @@ final class ParseTasksListTest extends TestCase
         }
     }
 
+    /**
+     * Дефолтный набор данных для тестирования
+     *
+     * @return array[][][]
+     */
     public function defaultDataSet(): array
     {
         return TestTasks::getCollection();

@@ -8,6 +8,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Flagmer\Integrations\Amocrm\sendLeadDto;
 use Flagmer\Billing\Account\processPaymentDto;
+use stdClass;
 
 /**
  * Class DTOFactory
@@ -29,11 +30,11 @@ class DTOFactory
     /**
      * Получение DTO
      *
-     * @param $arg
+     * @param stdClass $arg
      * @return mixed
      * @throws \ReflectionException
      */
-    public static function get($arg)
+    public static function get(stdClass $arg)
     {
         $dtoClass = self::getClass($arg->category);
         if (class_exists($dtoClass)) {
@@ -47,11 +48,11 @@ class DTOFactory
     /**
      * Заполнение объекта данными
      *
-     * @param $object
-     * @param $arg
+     * @param sendLeadDto|processPaymentDto $object
+     * @param stdClass $arg
      * @throws \ReflectionException
      */
-    private static function fillObject(&$object, $arg): void
+    private static function fillObject(&$object, stdClass $arg): void
     {
         $ref = new ReflectionClass(get_class($object));
         $properties = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
@@ -65,10 +66,10 @@ class DTOFactory
     /**
      * Получение класса по ключу (категории)
      *
-     * @param $slug
+     * @param string $slug Категория задачи
      * @return string|null
      */
-    private static function getClass($slug): ?string
+    private static function getClass(string $slug): ?string
     {
         if (array_key_exists($slug, self::MAPPING)) {
             return self::MAPPING[$slug];

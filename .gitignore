@@ -2,3 +2,4 @@
 vendor/
 tmp/
 public/
+.phpunit.result.cache

@@ -6,6 +6,7 @@ namespace App\Service\TaskWorker;
 
 use App\Service\TaskWorker\TaskAdapters\AmocrmAdapter;
 use App\Service\TaskWorker\TaskAdapters\AccountAdapter;
+use stdClass;
 
 /**
  * Class TaskFactory
@@ -26,11 +27,12 @@ class TaskFactory
 
     /**
      * Получение адаптера задачи по его категории
-     * 
-     * @param $arg
+     *
+     * @param stdClass $arg
      * @return Task
+     * @throws \ReflectionException
      */
-    public static function get($arg): Task
+    public static function get(stdClass $arg): Task
     {
         $taskClass = self::getClass($arg->category);
         if (class_exists($taskClass)) {
@@ -43,10 +45,10 @@ class TaskFactory
     /**
      * Получение класса по ключу (категории) 
      * 
-     * @param $slug
-     * @return string|null
+     * @param string $slug Категория
+     * @return string|null Класс адаптера
      */
-    private static function getClass($slug): ?string
+    private static function getClass(string $slug): ?string
     {
         if (array_key_exists($slug, self::MAPPING)) {
             return self::MAPPING[$slug];

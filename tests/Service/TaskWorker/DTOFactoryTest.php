@@ -3,12 +3,17 @@ declare(strict_types=1);
 
 namespace Tests\Sevice\TaskWorker;
 
+use ReflectionException;
 use Tests\TestCase;
 use Tests\Factory\TestTasks;
 use App\Service\TaskWorker\DTOFactory;
 use Flagmer\Integrations\Amocrm\sendLeadDto;
 use Flagmer\Billing\Account\processPaymentDto;
 
+/**
+ * Class DTOFactoryTest
+ * @package Tests\Sevice\TaskWorker
+ */
 final class DTOFactoryTest extends TestCase
 {
     /**
@@ -17,9 +22,10 @@ final class DTOFactoryTest extends TestCase
      * @testdox Фабрика DTO
      * @group dto_factory
      * @dataProvider defaultDataSet
-     * @param $data
+     * @param array[][][] $data
+     * @throws ReflectionException
      */
-    public function testParseFile($data): void
+    public function testParseFile(array $data): void
     {
         foreach ($data as $item) {
             $data = (object) $item;
@@ -35,6 +41,11 @@ final class DTOFactoryTest extends TestCase
         }
     }
 
+    /**
+     * Дефолтный набор данных для тестирования
+     *
+     * @return array[][][]
+     */
     public function defaultDataSet(): array
     {
         return TestTasks::getCollection();
