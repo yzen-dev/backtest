@@ -1,7 +1,6 @@
 {
   "name": "yzen.dev/backtest",
   "description": "Тестовое задание",
-  "version": "0.0.1",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "license": "MIT",
