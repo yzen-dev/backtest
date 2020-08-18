@@ -31,3 +31,10 @@ or
 composer run-script test
 ```
 После тестов будет сгенерирован html файл в директории public, с результатом всех выполненых тестов.
+
+Запускаем phpstan для анализа кода
+```
+./vendor/bin/phpstan analyse -c ./phpstan.neon
+or
+composer run-script phpstan
+```
