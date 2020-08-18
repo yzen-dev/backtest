@@ -27,5 +27,7 @@ php index.php
 Для запуска тестов
 ```
 php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml
+or
+composer run-script test
 ```
 После тестов будет сгенерирован html файл в директории public, с результатом всех выполненых тестов.
