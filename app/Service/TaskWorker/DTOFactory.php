@@ -5,10 +5,11 @@ namespace App\Service\TaskWorker;
 
 
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 use Flagmer\Integrations\Amocrm\sendLeadDto;
 use Flagmer\Billing\Account\processPaymentDto;
-use stdClass;
+use RuntimeException;
 
 /**
  * Class DTOFactory
@@ -20,7 +21,9 @@ use stdClass;
 class DTOFactory
 {
     /**
-     * Сопаставление категории и класса DTO
+     * Сопоставление категории и класса DTO
+     * 
+     * @var array
      */
     private const MAPPING = [
         'amocrm' => sendLeadDto::class,
@@ -30,29 +33,31 @@ class DTOFactory
     /**
      * Получение DTO
      *
-     * @param stdClass $arg
-     * @return mixed
-     * @throws \ReflectionException
+     * @param object $arg Список аргументов
+     * 
+     * @return object
+     * @throws ReflectionException
      */
-    public static function get(stdClass $arg)
+    public static function get(object $arg)
     {
         $dtoClass = self::getClass($arg->category);
         if (class_exists($dtoClass)) {
             $dto = new $dtoClass($arg);
-            self::fillObject($dto, $arg);
+            $dto = self::fillObject($dto, $arg);
             return $dto;
         }
-        throw new \RuntimeException('Неудалось определить DTO класс для категории ' . $arg->category);
+        throw new RuntimeException('Не удалось определить DTO класс для категории ' . $arg->category);
     }
 
     /**
      * Заполнение объекта данными
      *
-     * @param sendLeadDto|processPaymentDto $object
-     * @param stdClass $arg
-     * @throws \ReflectionException
+     * @param object $object Заполняемый объект
+     * @param object $arg Список аргументов
+     * @return object
+     * @throws ReflectionException
      */
-    private static function fillObject(&$object, stdClass $arg): void
+    private static function fillObject($object, object $arg): object
     {
         $ref = new ReflectionClass(get_class($object));
         $properties = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
@@ -61,6 +66,7 @@ class DTOFactory
                 $object->{$item->getName()} = $arg->data->{$item->getName()};
             }
         }
+        return $object;
     }
 
     /**

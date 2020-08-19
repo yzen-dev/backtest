@@ -18,6 +18,7 @@ class AccountAdapter implements Task
      * @var Account
      */
     private Account $job;
+    
     /**
      * @var processPaymentDto
      */
