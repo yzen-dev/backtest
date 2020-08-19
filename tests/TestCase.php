@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Helpers\Dir;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 /**
@@ -15,9 +16,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function setUp(): void
     {
-        if (!is_dir('tmp')) {
-            mkdir('tmp');
-        }
+        Dir::mkdir('tmp');
         parent::setUp();
     }
 
@@ -26,23 +25,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function tearDown(): void
     {
-        if (is_dir('tmp')) {
-            self::delTree('tmp');
-        }
+        Dir::rmdirRecursive('tmp');
         parent::tearDown();
-    }
-
-    /**
-     * Рекурсивное удаление директории вместе с файлами
-     * @param string $dir Директория которую необходимо удалить
-     * @return bool
-     */
-    public static function delTree(string $dir): bool
-    {
-        $files = array_diff(scandir($dir), array('.', '..'));
-        foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
-        }
-        return rmdir($dir);
     }
 }
