@@ -5,6 +5,7 @@ namespace Tests\Sevice\TaskWorker;
 
 use Exception;
 use Tests\TestCase;
+use RuntimeException;
 use Tests\Factory\TestTasks;
 use App\Service\TaskWorker\Task;
 use App\Service\TaskWorker\ParseTasksList;
@@ -37,17 +38,13 @@ final class ParseTasksListTest extends TestCase
      */
     public function testParseFileErrorFormat(): void
     {
+        $this->expectException(RuntimeException::class);
+
         $path = 'tmp/testParseFileErrorFormat.json';
         $myfile = fopen($path, 'wb') or die('Cannot open the file');
         fwrite($myfile, '[');
         fclose($myfile);
-        try {
-            $this->parsingService->parse($path);
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-            return;
-        }
-        $this->fail('Ошибка не вызвана');
+        $this->parsingService->parse($path);
     }
 
     /**
