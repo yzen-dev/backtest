@@ -1,0 +1,14 @@
+{
+  "includes": [ 
+    "app"
+  ],
+  "report": {
+    "html": "public/phpmetrics"
+  },
+  "plugins": {
+    "git": {
+      "binary": "git"
+    }
+  },
+  "extensions": [ "php" ]
+}

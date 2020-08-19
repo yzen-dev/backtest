@@ -38,6 +38,9 @@
     ],
     "phpstan": [
       "./vendor/bin/phpstan analyse -c ./phpstan.neon"
+    ],
+    "phpmetrics": [
+      "./vendor/bin/phpmetrics --config=./phpmetrics.json"
     ]
   }
 }
