@@ -1,0 +1,38 @@
+stages:
+  - preparation
+  - testing
+  - analyze
+
+image: php:latest
+
+before_script:
+  - apt-get update  && apt-get install -y openssl git
+  - docker-php-ext-install pcntl sockets sysvsem
+
+# Select what we should cache between builds
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+  paths:
+    - vendor/
+
+composer:
+  stage: preparation
+  script:
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 days
+    when: on_success
+
+
+# Run our tests
+phpunit:
+  stage: testing
+  script:
+    - php vendor/bin/phpunit --configuration ./phpunit.xml
+phpstan:
+  stage: analyze
+  script:
+    - vendor/bin/phpstan analyse -c ./phpstan.neon
