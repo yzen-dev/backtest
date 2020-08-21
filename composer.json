@@ -34,6 +34,16 @@
     "squizlabs/php_codesniffer": "*"
   },
   "scripts": {
+    "pre-commit-check": [
+      "cp commands/pre_commit.sh .git/hooks/pre-commit",
+      "chmod +x .git/hooks/pre-commit"
+    ],
+    "post-install-cmd": [
+      "@pre-commit-check"
+    ],
+    "post-update-cmd": [
+      "@pre-commit-check"
+    ],
     "test": [
       "@php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml"
     ],
