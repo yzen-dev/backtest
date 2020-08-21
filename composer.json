@@ -30,7 +30,8 @@
   "require-dev": {
     "phpunit/phpunit": "^9.3",
     "phpstan/phpstan": "^0.12.37",
-    "phpmetrics/phpmetrics": "^2.7"
+    "phpmetrics/phpmetrics": "^2.7",
+    "squizlabs/php_codesniffer": "*"
   },
   "scripts": {
     "test": [
@@ -41,6 +42,10 @@
     ],
     "phpmetrics": [
       "./vendor/bin/phpmetrics --config=./phpmetrics.json"
+    ],
+    "phpcs": [
+      "./vendor/bin/phpcs --config-set default_standard phpcs.xml",
+      "./vendor/bin/phpcs --extensions=php"
     ]
   }
 }

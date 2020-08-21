@@ -26,7 +26,7 @@ php index.php
 
 Для запуска тестов
 ```
-php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml
+php ./vendor/bin/phpunit --configuration ./phpunit.xml
 or
 composer run-script test
 ```
@@ -37,4 +37,12 @@ composer run-script test
 ./vendor/bin/phpstan analyse -c ./phpstan.neon
 or
 composer run-script phpstan
+```
+
+Для запуска анализатора php CodeSniffer
+```
+./vendor/bin/phpcs --config-set default_standard phpcs.xml
+./vendor/bin/phpcs --extensions=php
+or
+composer run-script phpcs
 ```
