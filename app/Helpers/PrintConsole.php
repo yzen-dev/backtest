@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace App\Helpers;
 
-
 /**
  * Class PrintConsole
- * 
+ *
  * Вспомогательный сервис для вывода данных в консоль
- * 
+ *
  * @package App\Helpers
  */
 class PrintConsole
 {
     /**
      * Вывод ошибки (красный фон)
-     * 
+     *
      * @param string $message Сообщение
      */
     public static function error($message): void

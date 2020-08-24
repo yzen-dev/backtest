@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Service\TaskWorker\TaskAdapters;
 
-
 use Flagmer\Billing\Account;
 use App\Service\TaskWorker\Task;
 use Flagmer\Billing\Account\processPaymentDto;

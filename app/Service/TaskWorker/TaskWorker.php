@@ -67,6 +67,7 @@ class TaskWorker
 
     /**
      * @param int $numberThreads
+     * @return TaskWorker
      */
     public function setNumberThreads(int $numberThreads): TaskWorker
     {
@@ -84,6 +85,7 @@ class TaskWorker
 
     /**
      * @param int|string $dir
+     * @return TaskWorker
      */
     public function setDir($dir): TaskWorker
     {

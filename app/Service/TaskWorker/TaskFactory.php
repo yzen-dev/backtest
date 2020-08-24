@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 namespace App\Service\TaskWorker;
 
-
 use App\Service\TaskWorker\TaskAdapters\AmocrmAdapter;
 use App\Service\TaskWorker\TaskAdapters\AccountAdapter;
 
 /**
  * Class TaskFactory
- * 
+ *
  * Генерация адаптеров задач
- * 
+ *
  * @package App\Service\TaskWorker
  */
 class TaskFactory
 {
     /**
-     * Сопаставление категории и класса адаптера
+     * Сопоставление категории и класса адаптера
      */
     private const MAPPING = [
         'amocrm' => AmocrmAdapter::class,
@@ -35,15 +34,15 @@ class TaskFactory
     {
         $taskClass = self::getClass($arg->category);
         if (class_exists($taskClass)) {
-            $dto = DTOFactory::get($arg);;
+            $dto = DTOFactory::get($arg);
             return new $taskClass($dto);
         }
         throw new \RuntimeException('Неудалось определить DTO класс для категории ' . $arg->category);
     }
 
     /**
-     * Получение класса по ключу (категории) 
-     * 
+     * Получение класса по ключу (категории)
+     *
      * @param string $slug Категория
      * @return string|null Класс адаптера
      */

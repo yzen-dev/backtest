@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Service\TaskWorker;
 
-
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -22,7 +21,7 @@ class DTOFactory
 {
     /**
      * Сопоставление категории и класса DTO
-     * 
+     *
      * @var array
      */
     private const MAPPING = [
@@ -34,7 +33,7 @@ class DTOFactory
      * Получение DTO
      *
      * @param object $arg Список аргументов
-     * 
+     *
      * @return object
      * @throws ReflectionException
      */

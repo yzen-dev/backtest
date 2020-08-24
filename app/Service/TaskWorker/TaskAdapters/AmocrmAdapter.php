@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Service\TaskWorker\TaskAdapters;
 
-
 use App\Service\TaskWorker\Task;
 use Flagmer\Integrations\AmoCrm;
 use Flagmer\Integrations\Amocrm\sendLeadDto;
