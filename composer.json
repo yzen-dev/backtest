@@ -54,8 +54,8 @@
       "./vendor/bin/phpmetrics --config=./phpmetrics.json"
     ],
     "phpcs": [
-      "./vendor/bin/phpcs --config-set default_standard phpcs.xml",
-      "./vendor/bin/phpcs --extensions=php"
+      "./vendor/bin/phpcs --config-set default_standard ./phpcs.xml",
+      "./vendor/bin/phpcs --extensions=php --standard=PSR2 app"
     ]
   }
 }
